@@ -28,7 +28,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import ProductGrid from "@/components/product/product-grid";
-import { Product } from "@shared/schema";
+import { Product } from "@shared/types";
 
 const subcategories = {
   supplement: [
