@@ -1,9 +1,8 @@
 // ⛔️ Cet import a été supprimé car drizzle-orm/pg-core ne doit pas être utilisé côté frontend.
 // Toute la logique liée au schéma et à la base de données doit être déplacée dans le backend.
-import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-// Users Table
+// Users Table (simple mapping)
 export const users = {
   id: "id",
   username: "username",
@@ -16,10 +15,18 @@ export const users = {
   createdAt: "created_at",
 };
 
-export const insertUserSchema = createInsertSchema(users)
-  .omit({ id: true, createdAt: true });
+// Schéma de validation utilisateur (frontend, zod natif)
+export const insertUserSchema = z.object({
+  username: z.string().min(2),
+  password: z.string().min(6),
+  email: z.string().email(),
+  fullName: z.string(),
+  phoneNumber: z.string().optional(),
+  address: z.string().optional(),
+  isAdmin: z.boolean().optional(),
+});
 
-// Products Table
+// Products Table (simple mapping)
 export const products = {
   id: "id",
   name: "name",
@@ -34,10 +41,20 @@ export const products = {
   createdAt: "created_at",
 };
 
-export const insertProductSchema = createInsertSchema(products)
-  .omit({ id: true, createdAt: true });
+// Schéma de validation produit (frontend, zod natif)
+export const insertProductSchema = z.object({
+  name: z.string().min(2),
+  description: z.string().min(2),
+  price: z.number().min(0),
+  imageUrl: z.string().url(),
+  category: z.string(),
+  subcategory: z.string(),
+  stock: z.number().int().min(0),
+  featured: z.boolean().optional(),
+  discount: z.number().int().min(0).max(100).optional(),
+});
 
-// Orders Table
+// Orders Table (simple mapping)
 export const orders = {
   id: "id",
   userId: "user_id", 
@@ -51,10 +68,18 @@ export const orders = {
   updatedAt: "updated_at",
 };
 
-export const insertOrderSchema = createInsertSchema(orders)
-  .omit({ id: true, createdAt: true, updatedAt: true });
+// Schéma de validation commande (frontend, zod natif)
+export const insertOrderSchema = z.object({
+  userId: z.number().optional(),
+  status: z.string().optional(),
+  totalAmount: z.number().min(0),
+  customerName: z.string(),
+  customerEmail: z.string().email(),
+  customerPhone: z.string(),
+  shippingAddress: z.string(),
+});
 
-// Order Items Table
+// Order Items Table (simple mapping)
 export const orderItems = {
   id: "id",
   orderId: "order_id",
@@ -63,14 +88,21 @@ export const orderItems = {
   priceAtPurchase: "price_at_purchase", 
 };
 
-export const insertOrderItemSchema = createInsertSchema(orderItems)
-  .omit({ id: true });
+// Schéma de validation item de commande (frontend, zod natif)
+export const insertOrderItemSchema = z.object({
+  orderId: z.number(),
+  productId: z.number(),
+  quantity: z.number().min(1),
+  priceAtPurchase: z.number().min(0),
+});
 
-// Cart items (used only for in-memory storage)
+// Cart
 export const cartItemSchema = z.object({
   productId: z.number(),
   quantity: z.number().min(1),
 });
+export type CartItem = z.infer<typeof cartItemSchema>;
+export type CartContent = CartItem[];
 
 // Stats (for admin dashboard)
 export const statsSchema = z.object({
@@ -90,17 +122,10 @@ export const statsSchema = z.object({
 // Types
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users;
-
 export type InsertProduct = z.infer<typeof insertProductSchema>;
 export type Product = typeof products;
-
 export type InsertOrder = z.infer<typeof insertOrderSchema>;
 export type Order = typeof orders;
-
 export type InsertOrderItem = z.infer<typeof insertOrderItemSchema>;
 export type OrderItem = typeof orderItems;
-
-export type CartItem = z.infer<typeof cartItemSchema>;
-export type CartContent = CartItem[];
-
 export type Stats = z.infer<typeof statsSchema>;
