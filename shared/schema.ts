@@ -1,66 +1,67 @@
-import { pgTable, text, serial, integer, boolean, jsonb, timestamp, doublePrecision } from "drizzle-orm/pg-core";
+// ⛔️ Cet import a été supprimé car drizzle-orm/pg-core ne doit pas être utilisé côté frontend.
+// Toute la logique liée au schéma et à la base de données doit être déplacée dans le backend.
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 // Users Table
-export const users = pgTable("users", {
-  id: serial("id").primaryKey(),
-  username: text("username").notNull().unique(),
-  password: text("password").notNull(),
-  email: text("email").notNull().unique(),
-  fullName: text("full_name").notNull(),
-  phoneNumber: text("phone_number"),
-  address: text("address"),
-  isAdmin: boolean("is_admin").default(false).notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-});
+export const users = {
+  id: "id",
+  username: "username",
+  password: "password",
+  email: "email",
+  fullName: "full_name",
+  phoneNumber: "phone_number",
+  address: "address",
+  isAdmin: "is_admin",
+  createdAt: "created_at",
+};
 
 export const insertUserSchema = createInsertSchema(users)
   .omit({ id: true, createdAt: true });
 
 // Products Table
-export const products = pgTable("products", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  description: text("description").notNull(),
-  price: integer("price").notNull(), // in centimes (1/100 MAD)
-  imageUrl: text("image_url").notNull(),
-  category: text("category").notNull(), // 'supplement' or 'equipment'
-  subcategory: text("subcategory").notNull(),
-  stock: integer("stock").notNull().default(0),
-  featured: boolean("featured").default(false),
-  discount: integer("discount").default(0), // discount percentage
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-});
+export const products = {
+  id: "id",
+  name: "name",
+  description: "description",
+  price: "price", 
+  imageUrl: "image_url",
+  category: "category", 
+  subcategory: "subcategory",
+  stock: "stock", 
+  featured: "featured",
+  discount: "discount", 
+  createdAt: "created_at",
+};
 
 export const insertProductSchema = createInsertSchema(products)
   .omit({ id: true, createdAt: true });
 
 // Orders Table
-export const orders = pgTable("orders", {
-  id: serial("id").primaryKey(),
-  userId: integer("user_id"), // Optional now - user can order without an account
-  status: text("status").notNull().default("pending"), // pending, shipped, delivered, cancelled
-  totalAmount: integer("total_amount").notNull(), // in centimes (1/100 MAD)
-  customerName: text("customer_name").notNull(),
-  customerEmail: text("customer_email").notNull(),
-  customerPhone: text("customer_phone").notNull(),
-  shippingAddress: text("shipping_address").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+export const orders = {
+  id: "id",
+  userId: "user_id", 
+  status: "status", 
+  totalAmount: "total_amount", 
+  customerName: "customer_name",
+  customerEmail: "customer_email",
+  customerPhone: "customer_phone",
+  shippingAddress: "shipping_address",
+  createdAt: "created_at",
+  updatedAt: "updated_at",
+};
 
 export const insertOrderSchema = createInsertSchema(orders)
   .omit({ id: true, createdAt: true, updatedAt: true });
 
 // Order Items Table
-export const orderItems = pgTable("order_items", {
-  id: serial("id").primaryKey(),
-  orderId: integer("order_id").notNull(),
-  productId: integer("product_id").notNull(),
-  quantity: integer("quantity").notNull(),
-  priceAtPurchase: integer("price_at_purchase").notNull(), // in centimes (1/100 MAD)
-});
+export const orderItems = {
+  id: "id",
+  orderId: "order_id",
+  productId: "product_id",
+  quantity: "quantity",
+  priceAtPurchase: "price_at_purchase", 
+};
 
 export const insertOrderItemSchema = createInsertSchema(orderItems)
   .omit({ id: true });
@@ -88,16 +89,16 @@ export const statsSchema = z.object({
 
 // Types
 export type InsertUser = z.infer<typeof insertUserSchema>;
-export type User = typeof users.$inferSelect;
+export type User = typeof users;
 
 export type InsertProduct = z.infer<typeof insertProductSchema>;
-export type Product = typeof products.$inferSelect;
+export type Product = typeof products;
 
 export type InsertOrder = z.infer<typeof insertOrderSchema>;
-export type Order = typeof orders.$inferSelect;
+export type Order = typeof orders;
 
 export type InsertOrderItem = z.infer<typeof insertOrderItemSchema>;
-export type OrderItem = typeof orderItems.$inferSelect;
+export type OrderItem = typeof orderItems;
 
 export type CartItem = z.infer<typeof cartItemSchema>;
 export type CartContent = CartItem[];
