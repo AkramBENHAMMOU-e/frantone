@@ -27,5 +27,8 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist"),
     emptyOutDir: true,
+    rollupOptions: {
+      external: ["drizzle-orm/pg-core"],
+    },
   },
 });
