@@ -60,16 +60,17 @@ export default function Header() {
   return (
     <header className="bg-background shadow-md border-b border-border sticky top-0 z-50">
       {/* Top navigation bar */}
-      <div className="container mx-auto px-4 py-3 md:py-4 flex items-center justify-between">
-        <div className="flex items-center lg:w-1/4">
+      <div className="container mx-auto px-2 py-2 md:py-4 flex items-center justify-between gap-1 min-w-0"
+        style={{ maxWidth: '100vw' }}>
+        <div className="flex items-center lg:w-1/4 min-w-0">
           {/* Logo */}
-          <SafeLink href="/" className="flex items-center">
-            <Logo logoOnly={window.innerWidth < 350} />
+          <SafeLink href="/" className="flex items-center min-w-0">
+            <Logo logoOnly={window.innerWidth < 350} className="h-8 w-auto max-w-[120px] sm:max-w-[150px]" />
           </SafeLink>
         </div>
         
         {/* Desktop Navigation - Centered */}
-        <nav className="hidden md:flex justify-center space-x-6 lg:space-x-8 lg:w-2/4">
+        <nav className="hidden md:flex justify-center space-x-4 lg:space-x-8 lg:w-2/4 min-w-0">
           <SafeLink 
             href="/" 
             className={`text-foreground hover:text-primary font-medium transition-all duration-200 ${location === '/' ? 'text-primary font-semibold border-b-2 border-primary pb-1' : ''}`}
@@ -140,29 +141,27 @@ export default function Header() {
         </nav>
         
         {/* Right navigation: search, account, cart */}
-        <div className="flex items-center justify-end space-x-3 md:space-x-4 lg:w-1/4">
+        <div className="flex items-center justify-end space-x-2 md:space-x-4 lg:w-1/4 min-w-0">
           {/* Search - hidden on mobile (available from bottom nav) */}
-          <form onSubmit={handleSearch} className="hidden md:flex items-center relative">
+          <form onSubmit={handleSearch} className="hidden md:flex items-center relative min-w-0">
             <Input
               type="text"
               placeholder="Rechercher..."
-              className="pl-10 pr-4 py-2 rounded-lg border border-input focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent"
+              className="pl-8 pr-2 py-2 rounded-lg border border-input focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent text-sm"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              style={{ maxWidth: 120 }}
             />
-            <Search className="absolute left-3 text-muted-foreground h-4 w-4" />
+            <Search className="absolute left-2 text-muted-foreground h-4 w-4" />
           </form>
-          
           {/* Account - hidden label on mobile */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="text-foreground hover:text-primary transition-all duration-200 flex items-center">
-                <div className="p-2 rounded-full bg-accent/50 hover:bg-accent">
-                  <User className="h-5 w-5" />
+              <button className="text-foreground hover:text-primary transition-all duration-200 flex items-center p-0">
+                <div className="p-1 rounded-full bg-accent/50 hover:bg-accent">
+                  <User className="h-5 w-5 sm:h-6 sm:w-6" />
                 </div>
-                <span className="ml-2 hidden md:inline font-medium">
-                  {user ? (user.fullName || user.username) : "Mon compte"}
-                </span>
+                <span className="ml-1 hidden md:inline font-medium truncate max-w-[60px]">{user ? (user.fullName || user.username) : "Mon compte"}</span>
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="shadow-lg">
@@ -198,27 +197,27 @@ export default function Header() {
           
           {/* Cart */}
           <button 
-            className="text-foreground hover:text-primary transition-all duration-200 flex items-center"
+            className="text-foreground hover:text-primary transition-all duration-200 flex items-center p-0"
             onClick={() => setIsCartOpen(true)}
           >
-            <div className="relative p-2 rounded-full bg-accent/50 hover:bg-accent">
-              <ShoppingCart className="h-5 w-5" />
+            <div className="relative p-1 rounded-full bg-accent/50 hover:bg-accent">
+              <ShoppingCart className="h-5 w-5 sm:h-6 sm:w-6" />
               {totalItems > 0 && (
                 <span className="absolute -top-2 -right-2 bg-secondary text-secondary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold shadow-md">
                   {totalItems}
                 </span>
               )}
             </div>
-            <span className="ml-2 hidden md:inline font-medium">Panier</span>
+            <span className="ml-1 hidden md:inline font-medium truncate max-w-[40px]">Panier</span>
           </button>
           
           {/* Mobile menu button */}
           <button 
-            className="md:hidden text-foreground hover:text-primary transition-all duration-200 p-2 rounded-full bg-accent/50 hover:bg-accent"
+            className="md:hidden text-foreground hover:text-primary transition-all duration-200 p-1 rounded-full bg-accent/50 hover:bg-accent"
             onClick={() => setIsMobileMenuOpen(true)}
             aria-label="Ouvrir le menu"
           >
-            <Menu className="h-5 w-5" />
+            <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
           </button>
         </div>
       </div>

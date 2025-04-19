@@ -185,7 +185,36 @@ export default function ProductsPage() {
                     </div>
                   </div>
                 )}
-                
+
+                {/* Prix filter */}
+                <div>
+                  <h3 className="text-base font-medium mb-3">Prix</h3>
+                  <div className="flex items-center space-x-4">
+                    <span className="text-sm text-muted-foreground">{priceRange[0]} Dhs</span>
+                    <Slider
+                      min={0}
+                      max={1500}
+                      step={10}
+                      value={priceRange}
+                      onValueChange={setPriceRange}
+                      className="w-40"
+                    />
+                    <span className="text-sm text-muted-foreground">{priceRange[1]} Dhs</span>
+                  </div>
+                </div>
+
+                {/* Remise filter */}
+                <div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="discounted"
+                      checked={discounted}
+                      onCheckedChange={() => setDiscounted((v) => !v)}
+                    />
+                    <Label htmlFor="discounted">Produits en remise</Label>
+                  </div>
+                </div>
+
                 {/* Subcategory filter */}
                 {category && (
                   <div>

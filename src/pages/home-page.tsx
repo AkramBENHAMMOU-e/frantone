@@ -48,7 +48,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 pt-8 relative z-30">
           {/* Titre principal visible au-dessus du carousel sur mobile */}
           <div className="block md:hidden text-center mb-6 animate-fade-in" style={{animationDuration: '0.8s'}}>
-            <div className="inline-block bg-primary/20 text-primary-foreground rounded-full px-4 py-1 text-sm font-medium mb-6 backdrop-blur-sm">
+            <div className="inline-block bg-primary/20 text-primary-foreground rounded-full px-4 py-1 text-sm font-medium mb-6 backdrop-blur-sm" translate="no" lang="en">
               Monaliza House
             </div>
             <h1 className="text-4xl font-bold text-white mb-4 font-heading leading-tight tracking-tight">

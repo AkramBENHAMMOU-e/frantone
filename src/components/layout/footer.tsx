@@ -116,7 +116,7 @@ export default function Footer() {
         
         {/* Bottom Footer */}
         <div className="flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-sm mb-4 md:mb-0">&copy; 2025 Monaliza House. Tous droits réservés.</p>
+          <p className="text-gray-400 text-sm mb-4 md:mb-0" translate="no" lang="en">&copy; 2025 Monaliza House. Tous droits réservés.</p>
           <div className="flex space-x-4">
             <SafeLink href="/" className="text-gray-400 hover:text-white text-sm">Mentions légales</SafeLink>
             <SafeLink href="/" className="text-gray-400 hover:text-white text-sm">Politique de confidentialité</SafeLink>

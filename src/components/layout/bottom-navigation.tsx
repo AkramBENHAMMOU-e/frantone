@@ -63,7 +63,7 @@ export default function BottomNavigation() {
         data-radix-scroll-lock-nonarria-hidden="true"
         data-inert="false"
       >
-        <div className="grid grid-cols-5 h-16">
+        <div className="grid grid-cols-4 h-16">
           {/* Accueil - Redirection vers page principale */}
           <SafeLink 
             href="/" 
@@ -113,15 +113,6 @@ export default function BottomNavigation() {
             <ShoppingBag className="h-6 w-6" />
             <span>Panier</span>
           </button>
-          
-          {/* Compte - Redirection vers page principale */}
-          <SafeLink 
-            href="/" 
-            className="bottom-nav-item"
-          >
-            <User className="h-6 w-6" />
-            <span>Compte</span>
-          </SafeLink>
         </div>
       </div>
     </>

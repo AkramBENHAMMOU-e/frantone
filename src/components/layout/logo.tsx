@@ -36,7 +36,7 @@ export default function Logo({ className = '', logoOnly = false }: LogoProps) {
       )}
       
       {!logoOnly && (
-        <span className="text-primary text-2xl font-bold font-heading">
+        <span className="text-primary text-2xl font-bold font-heading" translate="no" lang="en">
           Monaliza<span className="text-red-600">House</span>
         </span>
       )}
